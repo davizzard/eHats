@@ -1,0 +1,26 @@
+<% @products.each do |p| %>
+  <div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+      <a href="<%= product_path(p)%>"><%= image_tag p.img %></a>
+      <div class="caption">
+
+        <h4><%= link_to p.name, product_path(p) %></h4>
+        <p><%= p.description %></p>
+        <h3 class="pull-right price-text"><%=number_to_currency(p.price, unit: 'EUR', format: "%u %n") %></h3>
+      </div>
+      <div class="ratings padding">
+        <% if  p.stars > 0.0 %>
+            <p class="pull-right"><%= p.stars %> estrellas</p>
+        <% else %>
+            <p class="pull-right">Sin puntuar</p>
+        <% end
+           $stars_remaining = p.stars
+           $stars_showing = 0
+        %>
+        <p>
+          <%= render 'products/product_stars' %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<%
+  while $stars_remaining >= 1.0 do
+%>
+    <span class="glyphicon glyphicon-star"></span>
+<%
+  $stars_remaining = $stars_remaining - 1.0;
+  $stars_showing = $stars_showing + 1;
+  end
+  if $stars_remaining >= 0.5
+%>
+    <span class="glyphicon glyphicon-star half"></span>
+<%
+  $stars_showing = $stars_showing + 1;
+  end
+  while $stars_showing < 5 do
+%>
+    <span class="glyphicon glyphicon-star-empty"></span>
+<%
+  $stars_showing = $stars_showing + 1;
+  end
+%>

@@ -1,0 +1,28 @@
+<%- if controller_name != 'sessions' %>
+	<span class="">¿Ya tienes una cuenta?</span>
+  	<%= link_to "Iniciar Sesión", new_session_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+	<p class="center-block">¿Eres un nuevo cliente?</p>
+ 	<a href="<%=new_registration_path(resource_name)%>" class="btn btn-default btn-block" role="button">Crea tu cuenta de eHats</a> 
+<% end -%>
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <br/>
+  <%= link_to "¿Has olvidado la contraseña?", new_password_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+  <%= link_to "¿No ha recibido instrucciones de confirmación?", new_confirmation_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to "¿No ha recibido instrucciones de desbloqueo?", new_unlock_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= link_to "Inicia sesión con #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
+  <% end -%>
+<% end -%>

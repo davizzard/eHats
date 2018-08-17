@@ -1,0 +1,35 @@
+<!-- Page Content -->
+<div class="container">
+  <h2 class="text-center">Bienvenido a eHats - encuentre su sombrero preferido</h2>
+  <br>
+</div>
+  <div class="container">
+    <div class="container">
+        <div class="container center-block">
+          <% @categories.each do |c| %>
+              <div class="col-sm-3 col-lg-3 col-md-3">
+                <div class="thumbnail">
+                  <a href="<%= category_path(c)%>"><%= image_tag c.img %></a>
+                    <div class="caption">
+                      <h4><%= link_to c.name, category_path(c) %></h4>
+                      <p><%= c.description %></p>
+                    </div>
+                </div>
+            </div>
+          <% end %>
+
+          <div class="col-sm-3 col-lg-4 col-md-3">
+            <div class="thumbnail">
+              <a href="<%= products_path %>"><%= image_tag "hats.png" %></a>
+              <div class="caption">
+                <h4><%= link_to "Todos los artículos", products_path %></h4>
+                <p><%= "Ver todos los sombreros disponibles." %></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+
+  </div>

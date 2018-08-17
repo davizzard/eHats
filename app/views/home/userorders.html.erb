@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Historial de pedidos</h2>
+  <hr>
+  <% if user_signed_in? %>
+      <% @user = User.find(current_user.id)
+         @user.orders.each do |order|
+      %>
+          <p><strong class="big-text">Pedido nº<%=order.id %></strong></p>
+          <p>
+           Pagado:
+           <% if order.payed %>
+             Sí.
+           <% else %>
+             No.
+           <% end %>
+          </p>
+          <p>Productos:</p>
+          <br>
+        <%
+          order.product_quantities.each do |pq|
+            p = Product.find(pq.product_id)
+        %>
+            <div class="row">
+              <div class="col-md-2">
+                <a href="<%= product_path(p)%>"><%= image_tag p.img, class: 'small-image' %></a>
+              </div>
+              <div class="col-md-4">
+                <h4><%= link_to p.name, product_path(p) %></h4>
+              </div>
+              <div class="col-md-2">
+                Precio por unidad: <p class="price-text-cart"><%=number_to_currency(p.price, unit: 'EUR', format: "%u %n") %></p>
+              </div>
+              <div class="col-md-2">
+                <span>Cantidad: <%=pq.quantity %></span>
+              </div>
+            </div>
+      <% end %>
+          <br>
+          <p class="big-text">Precio total pedido: <span class="price-text-cart"><%=number_to_currency(order.total_price, unit: 'EUR', format: "%u %n") %></span></p>
+          <hr><br><br>
+      <%
+        end
+      %>
+
+  <% else %>
+      <p>No has iniciado sesión todavía.</p>
+      <p><%= link_to "Identificarse", new_user_session_path %></p>
+  <% end %>
+</div>

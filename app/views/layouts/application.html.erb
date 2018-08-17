@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>eHats</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<%=root_path%>">eHats</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+
+        <!-- /.container -->
+        <div class="navbar-header col-md-5 search-box">
+          <%= form_tag(products_path, method: "get") do %>
+              <div class="input-group add-on">
+                <input class="form-control" placeholder="Buscar por nombre de artículo..." name="search" id="search" type="text">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+          <% end %>
+          </div>
+
+      </div>
+
+      <%= render 'layouts/user_widget' %>
+
+      <!-- /.navbar-collapse -->
+    </div>
+  </nav>
+
+
+    <%= yield %>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+  <!-- /.container -->
+  <br><br><br>
+  <div class="container footer">
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+      <div class="col-md-4 col-md-offset-1 foter-text">
+        <div class="col-lg-12">
+          <p><strong>Navegación</strong></p>
+          <p><%= link_to "Inicio", root_path, class: "foter-text" %></p>
+          <p><%= link_to "Todos los artículos", products_path, class: "foter-text" %></p>
+          <p><%= link_to "Mi Cesta", cart_path, class: "foter-text" %></p>
+        </div>
+      </div>
+      <div class="col-md-4 foter-text">
+        <div class="col-lg-12">
+          <p><strong>Cuenta</strong></p>
+          <% if user_signed_in? %>
+              <p><%= link_to "Mi perfil", perfil_path, class: "foter-text" %></p>
+              <p><%= link_to "Editar Información", edit_user_registration_path, class: "foter-text" %></p>
+              <p><%= link_to "Historial de pedidos", userorders_path, class: "foter-text" %></p>
+              <p><%= link_to "Cerrar Sessión", destroy_user_session_path, class: "foter-text" %></p>
+          <% else %>
+              <p><%= link_to "Iniciar sesión", new_user_session_path, :class => 'foter-text'  %></p>
+              <p><%= link_to "Crear una nueva cuenta", new_user_registration_path, :class => 'foter-text'  %></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-2 foter-text">
+        <div class="col-lg-12">
+          <p><strong>Aspectos legales</strong></p>
+          <p><%= link_to "Aviso Legal", legal_path, class: "foter-text" %></p>
+          <p><%= link_to "Formas de pago", infopago_path, class: "foter-text" %></p>
+        </div>
+      </div>
+
+      <div class="row foter-text">
+        <div class="col-lg-12">
+          <br><br>
+          <p>Copyright &copy; eHats 2017</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<div class="thumbnail login-box">
+  <div class="container login-box">
+    <h3>Detalles de Express Checkout:  </h3>
+    <div>
+      <p>Token: <%= @token%></p>
+      <p>ID de comprador: <%= @payer_id%></p>
+      <p>Nombre: <%= @details.params["first_name"]%> </p>
+      <p>Apellido: <%= @details.params["last_name"]%> </p>
+      <p>Comprador: <%= @details.params["payer"]%> </p>
+      <p>Dirección: <%= @details.params["street1"]%> </p>
+      <p>País del vendedor: <%= @details.params["country"]%> </p>
+      <p>Provincia: <%= @details.params["state_or_province"]%> </p>
+      <p>País de comprador: <%= @details.params["payer_country"]%> </p>
+    </div>
+    <%= form_tag purchase_path do %>
+        <%= hidden_field_tag "token", @token %>
+        <%= hidden_field_tag "PayerID", @payer_id %>
+        <%= submit_tag "Finalizar Compra" %>
+    <% end %>
+  </div>
+</div>

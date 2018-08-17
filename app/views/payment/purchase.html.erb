@@ -1,0 +1,14 @@
+<div class="thumbnail login-box">
+  <div class="container login-box">
+    <h3>Resultado de la compra</h3>
+    <p>Token: <%= @tok%></p>
+    <p>ID de comprador: <%= @pid%></p>
+    <p> <%= @result.message%> </p>
+    <% if @result.success? %>
+        <p>OK</p>
+    <% else %>
+        <p>Error</p>
+    <% end %>
+    <%= button_to "Inicio", root_path, :class => "btn btn-default", :method => :get  %>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="main">
+  <div class="container">
+    <% if !session[:productquantities].blank? %>
+        <h2>Cesta</h2>
+        <% if !session[:message].blank? %>
+            <div class="alert alert-success">
+              <span class="medium-text"> <%=session[:message] %></span> <span class="glyphicon glyphicon-ok medium-text"> </span>
+            </div>
+        <% end %>
+        <div class="col-md-2 col-md-offset-6">
+          <span>Precio</span>
+        </div>
+        <div class="col-md-2">
+          <span>Cantidad</span>
+        </div>
+        <hr>
+      <%  total_quant = 0
+          total_price = 0
+          session[:productquantities].each do |element|
+            p = Product.find(element["product_id"])
+            quant = element["quantity"]
+            total_quant += quant.to_i
+            total_price += p.price * quant.to_i
+      %>
+            <div class="row">
+              <div class="col-md-2">
+                <a href="<%= product_path(p)%>"><%= image_tag p.img, class: 'small-image' %></a>
+              </div>
+              <div class="col-md-4">
+                <h4><%= link_to p.name, product_path(p) %></h4>
+                <%= form_tag(controller: "cart", action:"deleteprod", method: "post") do %>
+                  <input name="product_id" type="hidden" value="<%=p.id%>"/>
+                  <button type="submit" class="btn btn-default">
+                    <span>Eliminar</span>
+                  </button>
+                <% end %>
+              </div>
+              <div class="col-md-2">
+                <h4 class="price-text-cart"><%=number_to_currency(p.price, unit: 'EUR', format: "%u %n") %></h4>
+              </div>
+                <div class="col-md-2">
+                  <%= form_tag(controller: "cart", action:"updprod", method: "post") do %>
+                    <input name="product_id" type="hidden" value="<%=p.id%>"/>
+                    <p class="small-margins">
+                      <input type="number" name="quantity" min="1" max="30" step="1" value="<%=quant %>"></p>
+                    <button type="submit" class="btn btn-default">
+                      <span>Cambiar cantidad</span>
+                    </button>
+                </div>
+              <% end %>
+            </div>
+          <hr>
+      <% end %>
+        <div class="row">
+          <div class="col-md-offset-6">
+            <span class="big-text">Subtotal(<%=total_quant %> producto/s): </span>
+            <span class="price-text"><%=number_to_currency(total_price, unit: 'EUR', format: "%u %n")%></span>
+          </div>
+          <br>
+          <div class="col-md-3"></div>
+          <div class="col-md-4">
+            <%= form_tag({controller: "payment", action:"express_checkout"}, method: "get") do %>
+                <input name="total_price" type="hidden" value="<%=number_with_precision(total_price, precision: 2) %>"/>
+                <p class="margin-top">
+                  <button type="submit" class="btn btn-warning btn-block">
+                    <span>Tramitar pedido</span>
+                  </button>
+                  <%= image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif", class: "center-block great-margin-top") %>
+                </p>
+            <% end %>
+          </div>
+        </div>
+    <% else %>
+        <h2>Tu cesta está vacía.</h2>
+        <p>
+          Haz que tu cesta de compra sea útil: llénala de nuestros diferentes tipos de sombreros.
+        </p>
+        <p><%= link_to "Ir al catálogo de sombreros.", products_path  %></p>
+    <% end %>
+    <% session[:message] = "" %>
+  </div>
+</div>

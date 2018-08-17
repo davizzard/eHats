@@ -1,0 +1,50 @@
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <%= render 'categories/cateogories_panel' %>
+
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <a><%= image_tag @product.img %></a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="caption-full product-info">
+        <h2><%=@product.name%></h2>
+        <div class="ratings">
+          <p>
+            <%
+              $stars_remaining = @product.stars
+              $stars_showing = 0
+            %>
+            <%= render 'products/product_stars' %>
+            <% if  @product.stars > 0.0 %>
+                <span class="padding"><%= @product.stars %> estrellas</span>
+            <% else %>
+                <span class="padding">Sin puntuar</span>
+            <% end %>
+          </p>
+
+        </div>
+        <h3 class="price-text"><%= number_to_currency(@product.price, unit: 'EUR', format: "%u %n") %> </h3>
+        <hr>
+        <h4> Cantidad: </h4>
+        <%= form_tag(controller: "cart", action:"addprod", method: "post") do %>
+            <input name="product_id" type="hidden" value="<%=@product.id%>"/>
+            <p><input type="number" name="quantity" min="1" max="30" step="1" value="1"></p>
+            <p>
+            <button type="submit" class="btn btn-warning">
+              <i class="glyphicon glyphicon-shopping-cart"></i> Añadir a la cesta
+            </button>
+            </p>
+        <% end %>
+        <hr>
+        <h4><%=@product.description%></h4>
+      </div>
+
+    </div>
+  </div>
+
+</div>

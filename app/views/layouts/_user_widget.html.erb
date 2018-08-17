@@ -1,0 +1,14 @@
+<p class="navbar-text pull-right">
+
+  <% if user_signed_in? %>
+      <strong><%= current_user.email %></strong>
+      <span> - </span>
+      <%= link_to 'Mi perfil', perfil_path, :class => 'navbar-link' %> |
+      <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+  <% else %>
+      <%= link_to "Identificarse", new_user_session_path, :class => 'navbar-link'  %> |
+      <%= link_to "Nueva cuenta", new_user_registration_path, :class => 'navbar-link'  %>
+  <% end %>
+
+  <%= link_to 'Cesta', cart_path, :class => 'navbar-padding glyphicon glyphicon-shopping-cart navbar-link' %>
+</p>
